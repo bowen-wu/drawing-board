@@ -1,0 +1,28 @@
+*{ margin:0; padding:0; }
+li{list-style: none;}
+a{text-decoration:none;}
+h1,h2,h3,h4,h5,h6{font-weight: normal;}
+.clearfix::after{content:"";display:block;clear:both;}
+
+
+#canvas{
+    background: #eee;
+    /* 知识点：canvas元素默认为 inline-block 元素，当你用 js 获取屏幕的宽高并赋给 canvas 时，
+    canvas 会出现 bug ，也就是 inlin-block 的 bug ，当你缩小屏幕时，inline-block 会有一个
+    间距，此时会出现滚动条，这就是inline-block 的 bug ，解决方案：
+    第一种: 将 canvas 设置为 display：block；
+    第二种：在 canvas 属性中添加 vertical-align：top；*/
+    display: block;
+    /* vertical-align: top; */
+}
+#set{
+    position: fixed;
+    left:0;
+    bottom:0;
+}
+.set.draw > #brush{
+    display: none;
+}
+.set.clean > #eraser{
+    display: none;
+}

@@ -64,7 +64,7 @@ h6 {
 
 .set>.modelActive {
     fill: #EB404C;
-    transform: scale(1.4);
+    transform: scale(1.2);
 }
 
 .palette {
@@ -76,7 +76,7 @@ h6 {
     transition: all 0.3s;
 }
 .palette.paletteActive {
-    transform: scale(1.4);
+    transform: scale(1.2);
 }
 
 .colors {
@@ -160,18 +160,14 @@ h6 {
     position: fixed;
     top: 60px;
     left:10px;
-    /* display: none; */
-    /* z-index: 1; */
 }
-.lineWidth.lineWidthActive{
-    display: block;
-}
+
 .lineWidth > li{
-    /* float: left; */
     border-radius: 50%;
     background: black;
+    transition: all 0.3s;
 }
-.lineWidth > .selectLineWidth{
+.lineWidth > .activeLineWidth{
     background: #30D5C8;
 }
 .lineWidth > .thin{

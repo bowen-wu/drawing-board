@@ -17,37 +17,28 @@ window.onload = function(){
     var color = colors.childNodes;
 
     
-    
-   // 初始化
-   var context = canvas.getContext('2d');
-   setPageSize(canvas);
-   var point = {x:'',y:''};
 
+    // 初始化
+    var context = canvas.getContext('2d');
+    setPageSize(canvas);
+    var point = { x: '', y: '' };
     // 监听鼠标事件
     listenUser()
-    // 更改模式
-    var using = false;
+    // 选择线宽
+    var lineWidth = 1;
+    selectLineWidth();
+
+    // 选择模式
+    var drawing = false;
     var model = 'brush';
-    brush.onclick = function(){
-        model = 'brush';
-        this.classList.add('modelActive');
-        eraser.classList.remove('modelActive');
-        lineWidthWaper.classList.add('lineWidthActive');
-    }
-    eraser.onclick = function(){
-        model = 'eraser';
-        this.classList.add('modelActive');
-        brush.classList.remove('modelActive');
-        lineWidthWaper.classList.remove('lineWidthActive');
-    }
-    eraser.ontouchmove = function(){
-        console.log('move');
-        using = false;
-    }
+    selectModel();
+
     // 清屏
     empty.onclick = function(){
         clear(0, 0, canvas.width, canvas.height)
     }
+
+    
     // 调色板 paletteActive
     var paletteing = false;
     palette.onclick = function(){
@@ -62,42 +53,14 @@ window.onload = function(){
         }     
     }
     // 调色
+    
 
-    // 线宽
-    var lineWidth = 2;
-    context.lineWidth = lineWidth;
-    console.log(context.lineWidth);
-    thin.onclick = function(){
-        console.log(context.lineWidth);
-        lineWidth = 2;
-        addClassName(this,'selectLineWidth')
-    }
-    middle.onclick = function(){
-        console.log(context.lineWidth);
-        lineWidth = 4;
-        addClassName(this,'selectLineWidth')
-    }
-    thick.onclick = function(){
-        console.log(context.lineWidth);
-        lineWidth = 6;
-        addClassName(this,'selectLineWidth')
-    }
-    function addClassName(ele,className){
-        var childs = ele.parentNode.childNodes;
-        for(var i = 0,len = childs.length;i<len;i++){
-            childs[i].classList.remove(className);
-        }
-        ele.classList.add(className);
-    }
-    
-    
 
 
     function listenUser() {
         if ('ontouchstart' in document.documentElement) {
             canvas.ontouchstart = function(event){
-                lineWidthWaper.classList.remove('lineWidthActive');
-                using = true;
+                drawing = true;
                 var x = event.touches[0].clientX;
                 var y = event.touches[0].clientY;
                 if (model === 'brush') {
@@ -112,8 +75,8 @@ window.onload = function(){
             canvas.ontouchmove = function(){
                 var x = event.touches[0].clientX;
                 var y = event.touches[0].clientY;
-                // 知识点：非 using 直接 return
-                if (!using) {
+                // 知识点：非 drawing 直接 return
+                if (!drawing) {
                     return
                 }
                 if (model === 'brush') {
@@ -126,12 +89,11 @@ window.onload = function(){
                 }
             }
             canvas.ontouchend = function(){
-                using = false;
+                drawing = false;
             }
         } else {
             canvas.onmousedown = function (event) {
-                lineWidthWaper.classList.remove('lineWidthActive');
-                using = true;
+                drawing = true;
                 var x = event.clientX;
                 var y = event.clientY;
                 if (model === 'brush') {
@@ -146,8 +108,8 @@ window.onload = function(){
             canvas.onmousemove = function (event) {
                 var x = event.clientX;
                 var y = event.clientY;
-                // 知识点：非 using 直接 return
-                if (!using) {
+                // 知识点：非 drawing 直接 return
+                if (!drawing) {
                     return
                 }
                 if (model === 'brush') {
@@ -160,7 +122,7 @@ window.onload = function(){
                 }
             }
             canvas.onmouseup = function () {
-                using = false;
+                drawing = false;
             }
         }
         
@@ -200,4 +162,52 @@ window.onload = function(){
     function clear(x, y, width, height){
         context.clearRect(x, y, width, height)
     }
+
+
+
+    // 选择模式 工具函数
+    function selectModel() {
+        brush.onclick = function () {
+            switchModel('brush', this, eraser)
+        }
+        eraser.onclick = function () {
+            switchModel('eraser', this, brush)
+        }
+    }
+    function switchModel(mode,ele,init){
+        model = mode;
+        ele.classList.add('modelActive');
+        init.classList.remove('modelActive');
+    }
+
+    // 选择线宽 工具函数
+    function selectLineWidth() {
+        context.lineWidth = lineWidth;
+        thin.onclick = function () {
+            setLineWidth(this, 1)
+        }
+        middle.onclick = function () {
+            setLineWidth(this, 2)
+        }
+        thick.onclick = function () {
+            setLineWidth(this, 4);
+        }
+    }
+    function setLineWidth(ele, width) {
+        lineWidth = width;
+        addClassName(ele, 'activeLineWidth')
+    }
+    function addClassName(ele, className) {
+        var childs = ele.parentNode.childNodes;
+        for (var i = 0, len = childs.length; i < len; i++) {
+            childs[i].classList.remove(className);
+        }
+        ele.classList.add(className);
+    }
+
+
+
 }
+
+
+

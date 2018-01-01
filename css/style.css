@@ -1,11 +1,40 @@
-*{ margin:0; padding:0; }
-li{list-style: none;}
-a{text-decoration:none;}
-h1,h2,h3,h4,h5,h6{font-weight: normal;}
-.clearfix::after{content:"";display:block;clear:both;}
+* {
+    margin: 0;
+    padding: 0;
+}
 
+li {
+    list-style: none;
+}
 
-#canvas{
+a {
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+#canvas {
     background: #eee;
     /* 知识点：canvas元素默认为 inline-block 元素，当你用 js 获取屏幕的宽高并赋给 canvas 时，
     canvas 会出现 bug ，也就是 inlin-block 的 bug ，当你缩小屏幕时，inline-block 会有一个
@@ -15,14 +44,157 @@ h1,h2,h3,h4,h5,h6{font-weight: normal;}
     display: block;
     /* vertical-align: top; */
 }
-#set{
+
+.set {
     position: fixed;
-    left:0;
-    bottom:0;
+    left: 0;
+    top: 0;
 }
-.set.draw > #brush{
+
+.set {
+    padding: 10px;
+}
+
+.set>svg {
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+    transition: all 0.3s;
+}
+
+.set>.modelActive {
+    fill: #EB404C;
+    transform: scale(1.4);
+}
+
+.palette {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    transition: all 0.3s;
+}
+.palette.paletteActive {
+    transform: scale(1.4);
+}
+
+.colors {
+    position: fixed;
+    top: 48px;
+    right: 28px;
+    transition: all 0.3s;
     display: none;
 }
-.set.clean > #eraser{
-    display: none;
+.colors.colorsActive{
+    display: block;
 }
+
+.colors>li {
+    width: 14px;
+    height: 14px;
+    margin: 8px 0;
+    transition: all 0.3s;
+}
+.colors > .colorActive{
+    border-radius:50%;
+}
+.colors>.black {
+    background: black;
+}
+
+.colors>.gray {
+    background: gray;
+}
+
+.colors>.lilac {
+    background: #B399FF;
+}
+
+.colors>.green {
+    background: green;
+}
+
+.colors>.emerald {
+    background: #50C878;
+}
+.colors>.springGreen {
+    background: #00FF80;
+}
+.colors>.cyan {
+    background: cyan;
+}
+.colors>.turquoise {
+    background: #30D5C8;
+}
+.colors>.azure {
+    background: #007FFF;
+}
+.colors>.blue {
+    background: blue;
+}
+.colors>.pansy {
+    background: #7400A1;
+}
+.colors>.purple {
+    background: purple;
+}
+.colors>.camellia {
+    background: #E63995;
+}
+.colors>.crimson {
+    background: crimson;
+}
+.colors>.red {
+    background: red;
+}
+.colors>.orange {
+    background: orange;
+}
+.colors>.yellow {
+    background: yellow;
+}
+
+
+.lineWidth{
+    position: fixed;
+    top: 60px;
+    left:10px;
+    /* display: none; */
+    /* z-index: 1; */
+}
+.lineWidth.lineWidthActive{
+    display: block;
+}
+.lineWidth > li{
+    /* float: left; */
+    border-radius: 50%;
+    background: black;
+}
+.lineWidth > .selectLineWidth{
+    background: #30D5C8;
+}
+.lineWidth > .thin{
+    width:6px;
+    height:6px;
+    margin: 8px 6px 16px;
+}
+.lineWidth > .middle{
+    width:8px;
+    height:8px;
+    margin: 16px 5px;
+}
+.lineWidth > .thick{
+    width:10px;
+    height:10px;
+    margin:16px 4px;
+}
+
+
+
+
+
+
+
+
+

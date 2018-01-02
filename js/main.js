@@ -12,10 +12,36 @@ window.onload = function(){
     var middle = document.getElementById('middle');
     var thick = document.getElementById('thick');
 
-     
 
-    var color = colors.childNodes;
-
+    // 调色板 paletteActive
+    var paletteing = false;
+    palette.onclick = function(){
+        if (!paletteing) {
+            this.classList.add('paletteActive');
+            colors.classList.add('colorsActive');
+            paletteing = true;
+        } else {
+            this.classList.remove('paletteActive');
+            colors.classList.remove('colorsActive');
+            paletteing = false;
+        }     
+    }
+    // 调色
+    var color = judgementElementNode(colors.childNodes);
+    var lineColor = black;
+    colors.onclick = function(event){
+        lineColor = event.target.style.backgroundColor;
+        palette.style.fill = lineColor;
+    }
+    function judgementElementNode(nodes){
+        var node=[];
+        for(var i=0, len=nodes.length;i<len;i++){
+            if(nodes[i].nodeType === 1){
+                node.push(nodes[i]);
+            }
+        }
+        return node;
+    }
     
 
     // 初始化
@@ -34,25 +60,11 @@ window.onload = function(){
     selectModel();
 
     // 清屏
-    empty.onclick = function(){
-        clear(0, 0, canvas.width, canvas.height)
-    }
-
+    clearScreen();
     
-    // 调色板 paletteActive
-    var paletteing = false;
-    palette.onclick = function(){
-        if (!paletteing) {
-            this.classList.add('paletteActive');
-            colors.classList.add('colorsActive');
-            paletteing = true;
-        } else {
-            this.classList.remove('paletteActive');
-            colors.classList.remove('colorsActive');
-            paletteing = false;
-        }     
-    }
-    // 调色
+
+
+
     
 
 
@@ -66,7 +78,7 @@ window.onload = function(){
                 if (model === 'brush') {
                     point.x = x;
                     point.y = y;
-                    drawCircle(x, y, lineWidth/2, 'red');
+                    drawCircle(x, y, lineWidth/2, lineColor);
                     return point;
                 } else {
                     clear((x - 3), (y - 3), 8, 8);
@@ -80,12 +92,12 @@ window.onload = function(){
                     return
                 }
                 if (model === 'brush') {
-                    drawLine(point.x, point.y, x, y, 'red', lineWidth);
+                    drawLine(point.x, point.y, x, y, lineColor, lineWidth);
                     // 知识点：更新位置
                     point.x = x;
                     point.y = y;
                 } else {
-                    clear((x - 2), (y - 2), 8, 8);
+                    clear((x - 5), (y - 5), 10, 10);
                 }
             }
             canvas.ontouchend = function(){
@@ -99,10 +111,10 @@ window.onload = function(){
                 if (model === 'brush') {
                     point.x = x;
                     point.y = y;
-                    drawCircle(x, y, lineWidth/2, 'red');
+                    drawCircle(x, y, lineWidth/2, lineColor);
                     return point;
                 } else {
-                    clear((x - 3), (y - 3), 6, 6);
+                    clear((x - 5), (y - 5), 10, 10);
                 }
             }
             canvas.onmousemove = function (event) {
@@ -113,7 +125,7 @@ window.onload = function(){
                     return
                 }
                 if (model === 'brush') {
-                    drawLine(point.x, point.y, x, y, 'red', lineWidth);
+                    drawLine(point.x, point.y, x, y, lineColor, lineWidth);
                     // 知识点：更新位置
                     point.x = x;
                     point.y = y;
@@ -203,6 +215,16 @@ window.onload = function(){
             childs[i].classList.remove(className);
         }
         ele.classList.add(className);
+    }
+    // 清屏 工具函数
+    function clearScreen() {
+        empty.onclick = function () {
+            clear(0, 0, canvas.width, canvas.height);
+            this.classList.add("animated", "shake");
+            setTimeout(() => {
+                this.classList.remove("animated", "shake");
+            }, 1000);
+        }
     }
 
 

@@ -35,7 +35,7 @@ h6 {
 }
 
 #canvas {
-    background: #eee;
+    background-color: #eee;
     /* 知识点：canvas元素默认为 inline-block 元素，当你用 js 获取屏幕的宽高并赋给 canvas 时，
     canvas 会出现 bug ，也就是 inlin-block 的 bug ，当你缩小屏幕时，inline-block 会有一个
     间距，此时会出现滚动条，这就是inline-block 的 bug ，解决方案：
@@ -43,15 +43,16 @@ h6 {
     第二种：在 canvas 属性中添加 vertical-align：top；*/
     display: block;
     /* vertical-align: top; */
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
+/* 模式 */
 .set {
     position: fixed;
     left: 0;
     top: 0;
-}
-
-.set {
     padding: 10px;
 }
 
@@ -66,6 +67,38 @@ h6 {
     fill: #EB404C;
     transform: scale(1.2);
 }
+/* 线宽 */
+.lineWidth{
+    position: fixed;
+    top: 60px;
+    left:10px;
+}
+
+.lineWidth > li{
+    border-radius: 50%;
+    background-color: black;
+    transition: all 0.3s;
+}
+.lineWidth > .activeLineWidth{
+    background-color: #30D5C8;
+}
+.lineWidth > .thin{
+    width:6px;
+    height:6px;
+    margin: 8px 6px 16px;
+}
+.lineWidth > .middle{
+    width:8px;
+    height:8px;
+    margin: 16px 5px;
+}
+.lineWidth > .thick{
+    width:10px;
+    height:10px;
+    margin:16px 4px;
+}
+
+
 
 .palette {
     position: fixed;
@@ -90,100 +123,12 @@ h6 {
     display: block;
 }
 
-.colors>li {
+.colors > .color {
     width: 14px;
     height: 14px;
     margin: 8px 0;
     transition: all 0.3s;
-}
-.colors > .colorActive{
-    border-radius:50%;
-}
-.colors>.black {
-    background: black;
-}
-
-.colors>.gray {
-    background: gray;
-}
-
-.colors>.lilac {
-    background: #B399FF;
-}
-
-.colors>.green {
-    background: green;
-}
-
-.colors>.emerald {
-    background: #50C878;
-}
-.colors>.springGreen {
-    background: #00FF80;
-}
-.colors>.cyan {
-    background: cyan;
-}
-.colors>.turquoise {
-    background: #30D5C8;
-}
-.colors>.azure {
-    background: #007FFF;
-}
-.colors>.blue {
-    background: blue;
-}
-.colors>.pansy {
-    background: #7400A1;
-}
-.colors>.purple {
-    background: purple;
-}
-.colors>.camellia {
-    background: #E63995;
-}
-.colors>.crimson {
-    background: crimson;
-}
-.colors>.red {
-    background: red;
-}
-.colors>.orange {
-    background: orange;
-}
-.colors>.yellow {
-    background: yellow;
-}
-
-
-.lineWidth{
-    position: fixed;
-    top: 60px;
-    left:10px;
-}
-
-.lineWidth > li{
     border-radius: 50%;
-    background: black;
-    transition: all 0.3s;
-}
-.lineWidth > .activeLineWidth{
-    background: #30D5C8;
-}
-.lineWidth > .thin{
-    width:6px;
-    height:6px;
-    margin: 8px 6px 16px;
-}
-.lineWidth > .middle{
-    width:8px;
-    height:8px;
-    margin: 16px 5px;
-}
-.lineWidth > .thick{
-    width:10px;
-    height:10px;
-    margin:16px 4px;
 }
 
 

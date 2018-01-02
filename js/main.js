@@ -15,10 +15,10 @@ window.onload = function(){
 
     // 初始化
     var context = canvas.getContext('2d');
-    setPageSize(canvas);
-    var point = { x: '', y: '' };
+    init();
     // 监听鼠标事件
-    listenUser()
+    var point = { x: '', y: '' };
+    listenUser();
     // 选择线宽
     var lineWidth = 1;
     selectLineWidth();
@@ -35,6 +35,25 @@ window.onload = function(){
     saveCanvas();
     
     
+    function init() {
+        setPageSize()
+        context.fillStyle = '#fff';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    function setPageSize() {
+        initPageSize(canvas);
+        // 知识点：监控页面变化，随时进行更新
+        window.onresize = function () {
+            initPageSize();
+        }
+    }
+    function initPageSize() {
+        // 知识点：获取页面宽高
+        var pageWidth = document.documentElement.clientWidth;
+        var pageHeight = document.documentElement.clientHeight;
+        canvas.width = pageWidth;
+        canvas.height = pageHeight;
+    }
 
 
 
@@ -112,20 +131,7 @@ window.onload = function(){
     }
     
 
-    function setPageSize(canvas) {
-        initPageSize(canvas);
-        // 知识点：监控页面变化，随时进行更新
-        window.onresize = function(){
-            initPageSize(canvas);
-        }
-    }
-    function initPageSize(canvas) {
-        // 知识点：获取页面宽高
-        var pageWidth = document.documentElement.clientWidth;
-        var pageHeight = document.documentElement.clientHeight;
-        canvas.width = pageWidth;
-        canvas.height = pageHeight;
-    }
+    
 
     function drawCircle(x, y, r, color) {
         context.beginPath();
@@ -239,10 +245,11 @@ window.onload = function(){
     function saveCanvas() {
         download.onclick = function () {
             var a = document.createElement('a');
+            document.body.appendChild(a);
             var imgName = window.prompt('请您为您的爱图保存名字：', '');
             if (imgName) {
                 a.setAttribute('download', imgName + '.png');
-                a.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+                a.setAttribute('href', canvas.toDataURL("image/png"));
                 a.click();
             } else {
                 return;

@@ -35,7 +35,6 @@ h6 {
 }
 
 #canvas {
-    background-color: #eee;
     /* 知识点：canvas元素默认为 inline-block 元素，当你用 js 获取屏幕的宽高并赋给 canvas 时，
     canvas 会出现 bug ，也就是 inlin-block 的 bug ，当你缩小屏幕时，inline-block 会有一个
     间距，此时会出现滚动条，这就是inline-block 的 bug ，解决方案：

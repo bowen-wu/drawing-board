@@ -12,43 +12,51 @@ window.onload = function(){
     var middle = document.getElementById('middle');
     var thick = document.getElementById('thick');
     var download = document.getElementById('download');
-
-    // 初始化
     var context = canvas.getContext('2d');
-    init();
-    // 监听用户事件
-    var point = { x: '', y: '' };
-    listenUser();
-    // 选择线宽
     var lineWidth = 1;
-    selectLineWidth();
-    // 选择模式
     var drawing = false;
     var model = 'brush';
-    selectModel();
-    // 清屏
-    clearScreen();
-    // 调色
     var lineColor = black;
-    changeColor();
-    // 下载
-    saveCanvas();
+    var point = {
+        x: '',
+        y: ''
+    };
+
+    init()
     
 
-    // 初始化 工具函数
+    // init 工具函数
     function init() {
+        // 准备
+        prepare();
+        // 监听用户事件
+        listenUser();
+        // 选择线宽
+        selectLineWidth();
+        // 选择模式
+        selectModel();
+        // 清屏
+        clearScreen();
+        // 调色
+        changeColor();
+        // 下载
+        saveCanvas();
+    }
+
+    // 准备 工具函数
+    function prepare() {
         setPageSize()
         context.fillStyle = '#fff';
         context.fillRect(0, 0, canvas.width, canvas.height);
     }
     function setPageSize() {
-        initPageSize(canvas);
+        preparePageSize(canvas);
         // 知识点：监控页面变化，随时进行更新
         window.onresize = function () {
-            initPageSize();
+            preparePageSize();
         }
     }
-    function initPageSize() {
+    function preparePageSize() {
         // 知识点：获取页面宽高
         var pageWidth = document.documentElement.clientWidth;
         var pageHeight = document.documentElement.clientHeight;

@@ -11,12 +11,7 @@ window.onload = function(){
     var thin = document.getElementById('thin');
     var middle = document.getElementById('middle');
     var thick = document.getElementById('thick');
-
-
-    
-    
-    
-    
+    var download = document.getElementById('download');
 
     // 初始化
     var context = canvas.getContext('2d');
@@ -36,6 +31,11 @@ window.onload = function(){
     // 调色
     var lineColor = black;
     changeColor();
+    // 下载
+    saveCanvas();
+    
+    
+
 
 
 
@@ -149,7 +149,7 @@ window.onload = function(){
 
 
 
-    
+
     // 选择模式 工具函数
     function selectModel() {
         brush.onclick = function () {
@@ -200,9 +200,13 @@ window.onload = function(){
         }
     }
     // 调色 工具函数
-    function changeColor(){
+    function changeColor() {
+        paletteEvent();
+        selectColorEvent();
+    }
+    function paletteEvent() {
         var paletteing = false;
-        palette.onclick = function(){
+        palette.onclick = function () {
             if (!paletteing) {
                 this.classList.add('paletteActive');
                 colors.classList.add('colorsActive');
@@ -211,10 +215,12 @@ window.onload = function(){
                 this.classList.remove('paletteActive');
                 colors.classList.remove('colorsActive');
                 paletteing = false;
-            }     
+            }
         }
+    }
+    function selectColorEvent() {
         var color = filterElementNode(colors.childNodes);
-        colors.onclick = function(event){
+        colors.onclick = function (event) {
             lineColor = event.target.style.backgroundColor;
             palette.style.fill = lineColor;
         }
@@ -228,6 +234,20 @@ window.onload = function(){
             }
         }
         return node;
+    }
+    // 下载 工具函数
+    function saveCanvas() {
+        download.onclick = function () {
+            var a = document.createElement('a');
+            var imgName = window.prompt('请您为您的爱图保存名字：', '');
+            if (imgName) {
+                a.setAttribute('download', imgName + '.png');
+                a.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+                a.click();
+            } else {
+                return;
+            }
+        }
     }
 
 

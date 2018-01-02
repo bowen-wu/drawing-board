@@ -13,35 +13,9 @@ window.onload = function(){
     var thick = document.getElementById('thick');
 
 
-    // 调色板 paletteActive
-    var paletteing = false;
-    palette.onclick = function(){
-        if (!paletteing) {
-            this.classList.add('paletteActive');
-            colors.classList.add('colorsActive');
-            paletteing = true;
-        } else {
-            this.classList.remove('paletteActive');
-            colors.classList.remove('colorsActive');
-            paletteing = false;
-        }     
-    }
-    // 调色
-    var color = judgementElementNode(colors.childNodes);
-    var lineColor = black;
-    colors.onclick = function(event){
-        lineColor = event.target.style.backgroundColor;
-        palette.style.fill = lineColor;
-    }
-    function judgementElementNode(nodes){
-        var node=[];
-        for(var i=0, len=nodes.length;i<len;i++){
-            if(nodes[i].nodeType === 1){
-                node.push(nodes[i]);
-            }
-        }
-        return node;
-    }
+    
+    
+    
     
 
     // 初始化
@@ -53,19 +27,16 @@ window.onload = function(){
     // 选择线宽
     var lineWidth = 1;
     selectLineWidth();
-
     // 选择模式
     var drawing = false;
     var model = 'brush';
     selectModel();
-
     // 清屏
     clearScreen();
-    
+    // 调色
+    var lineColor = black;
+    changeColor();
 
-
-
-    
 
 
 
@@ -177,6 +148,8 @@ window.onload = function(){
 
 
 
+
+    
     // 选择模式 工具函数
     function selectModel() {
         brush.onclick = function () {
@@ -210,7 +183,7 @@ window.onload = function(){
         addClassName(ele, 'activeLineWidth')
     }
     function addClassName(ele, className) {
-        var childs = ele.parentNode.childNodes;
+        var childs = filterElementNode(ele.parentNode.childNodes);
         for (var i = 0, len = childs.length; i < len; i++) {
             childs[i].classList.remove(className);
         }
@@ -225,6 +198,36 @@ window.onload = function(){
                 this.classList.remove("animated", "shake");
             }, 1000);
         }
+    }
+    // 调色 工具函数
+    function changeColor(){
+        var paletteing = false;
+        palette.onclick = function(){
+            if (!paletteing) {
+                this.classList.add('paletteActive');
+                colors.classList.add('colorsActive');
+                paletteing = true;
+            } else {
+                this.classList.remove('paletteActive');
+                colors.classList.remove('colorsActive');
+                paletteing = false;
+            }     
+        }
+        var color = filterElementNode(colors.childNodes);
+        colors.onclick = function(event){
+            lineColor = event.target.style.backgroundColor;
+            palette.style.fill = lineColor;
+        }
+    }
+    // 筛选元素节点
+    function filterElementNode(nodes){
+        var node=[];
+        for(var i=0, len=nodes.length;i<len;i++){
+            if(nodes[i].nodeType === 1){
+                node.push(nodes[i]);
+            }
+        }
+        return node;
     }
 
 
